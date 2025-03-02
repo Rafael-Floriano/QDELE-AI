@@ -1,22 +1,19 @@
-package br.com.rell.qdele_backend.controllers;
+package senac.plugin.Controller;
 
-import br.com.rell.qdele_backend.entities.User;
-import br.com.rell.qdele_backend.repositories.UserRepository;
-import br.com.rell.qdele_backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import senac.plugin.entities.User;
+import senac.plugin.services.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
-    private UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -44,15 +41,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.softDeleteUser(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
-
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-//        userService.deleteUser(id);
-//        return ResponseEntity.noContent().build();
-//    }
 
     @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {

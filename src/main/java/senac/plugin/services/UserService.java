@@ -1,9 +1,9 @@
-package br.com.rell.qdele_backend.services;
+package senac.plugin.services;
 
-import br.com.rell.qdele_backend.entities.User;
-import br.com.rell.qdele_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import senac.plugin.repositories.UserRepository;
+import senac.plugin.entities.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,17 +29,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void softDeleteUser(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setDeleted(true);
-            userRepository.save(user);
-        } else {
-            throw new RuntimeException("Usuário não encontrado com o ID: " + id);
-        }
-    }
-
 
     public User updateUser(Long id, User userDetails) {
         User user = userRepository.findById(id)
@@ -60,5 +49,4 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
 }
